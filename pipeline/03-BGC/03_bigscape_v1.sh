@@ -8,4 +8,4 @@ module load bigscape/1.1.9
 module load db-pfam
 pushd results
 mkdir -p bigscape_v1
-bigscape --mibig --include_singletons --inputdir antismash --outputdir bigscape_v1 --pfam_dir $PFAM_DB -c $CPU
+bigscape --mibig --include_singletons --inputdir antismash_regions/gbk --outputdir bigscape_v1 --pfam_dir $PFAM_DB -c $CPU

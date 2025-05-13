@@ -8,4 +8,4 @@ module load bigscape/2.0
 module load db-pfam
 pushd results
 mkdir -p bigscape_v2
-bigscape cluster --mibig --include_singletons --inputdir antismash --outputdir bigscape_v2 --pfam_dir $PFAM_DB -c $CPU
+bigscape cluster --mibig-version 4.0 --include-singletons --input-dir antismash --output-dir bigscape_v2 --pfam-path $PFAM_DB/Pfam-A.hmm -c $CPU
