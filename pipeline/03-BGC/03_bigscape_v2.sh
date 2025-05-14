@@ -1,5 +1,5 @@
 #!/usr/bin/bash -l
-#SBATCH -p epyc -c 96 -N 1 -n 1 --mem 512gb --out logs/bigscape_v2_renamed.%A.log
+#SBATCH -p epyc -c 96 -N 1 -n 1 --mem 512gb --out logs/bigscape_v2.%A.log
 CPU=2
 if [ $SLURM_CPUS_ON_NODE ]; then
   CPU=$SLURM_CPUS_ON_NODE
