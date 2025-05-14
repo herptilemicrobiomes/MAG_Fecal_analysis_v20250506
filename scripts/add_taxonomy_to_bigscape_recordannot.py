@@ -20,8 +20,8 @@ def parse_arguments():
                         default=sys.stdout,
                         help="Output the new record_annotations file. (default stdout)")
 
-    parser.add_argument("-m","--metadata",
-                        default="lib/animal_metadata.csv",
+    parser.add_argument("-m","--metadata",nargs="+",
+                        default=["lib/animal_metadata.csv","lib/wood_frog.csv"],
                         help="animal metadata for the UHM/Sample ID to host and animal info")
     
     return parser.parse_args()
@@ -48,13 +48,14 @@ def parse_gtdbfiles(taxonomy_files):
                 table[MAG] = [organism,classification]
     return table
 
-def parse_metadata(metadatafile):
+def parse_metadata(metadatafiles):
     table = dict()
-    with open(metadatafile, "rt") as infh:
-        metacsv = csv.DictReader(infh,delimiter=",")
-        for row in metacsv:
-            sample_id = row['sample_id']
-            table[sample_id] = row
+    for metadatafile in metadatafiles:
+        with open(metadatafile, "rt") as infh:
+            metacsv = csv.DictReader(infh,delimiter=",")
+            for row in metacsv:
+                sample_id = row['sample_id']
+                table[sample_id] = row
 
     return table
 def update_record_annotation(recordfile,taxondb,metadata,outfh):
@@ -87,6 +88,8 @@ def update_record_annotation(recordfile,taxondb,metadata,outfh):
             if sampid in metadata:
                 for meta in metadata_cols:
                     row[meta] = metadata[sampid][meta]
+            else:
+                print(f"sample {sampid} does not have metadata",file=sys.stderr)
 
             recordwriter.writerow(row)
     
